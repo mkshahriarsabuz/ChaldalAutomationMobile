@@ -10,6 +10,8 @@ import pages.ProductDetailsPage;
 import pages.SearchResultPage;
 import pages.ShoppingBagPage;
 
+import static utilities.DriverSetup.getDriver;
+
 public class RemoveItem {
 
     HomePage homepage = new HomePage();
@@ -19,10 +21,15 @@ public class RemoveItem {
 
     @Given("Search item {string}")
     public void searchItem(String arg0) {
-        System.out.println("print 1");
-       homepage.clickOnElement(homepage.searchButton);
-        System.out.println("print 2");
-       searchResultPage.writeOnAElement(searchResultPage.searchProductInputBox,arg0);
+        homepage.handleLocationAllow();
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        homepage.getElement(homepage.searchButton).click();
+        searchResultPage.writeOnAElement(searchResultPage.searchProductInputBox,arg0);
+        getDriver().hideKeyboard();
     }
 
     @And("Scroll down to an item and Open the Item screen")
@@ -34,6 +41,11 @@ public class RemoveItem {
     public void clickThePlusIconTimesToAddToTheCart(int arg0) {
 
         for (int i=0; i<arg0;i++) {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
             productDetailsPage.clickOnElement(productDetailsPage.addCartButton);
         }
         productDetailsPage.clickOnElement(productDetailsPage.closeButton);
@@ -47,7 +59,13 @@ public class RemoveItem {
     @When("Click the Minus - icon to empty the cart")
     public void clickTheMinusIconToEmptyTheCart() {
         boolean value = shoppingBagPage.isElementVisible(shoppingBagPage.productMinusButton);
+        System.out.println(value);
         while (value){
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
             shoppingBagPage.clickOnElement(shoppingBagPage.productMinusButton);
             value = shoppingBagPage.isElementVisible(shoppingBagPage.productMinusButton);
         }
