@@ -21,16 +21,25 @@ public class RemoveItem {
 
     @Given("Search item {string}")
     public void searchItem(String arg0) {
-
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         homepage.handleLocationAllow();
         try {
-            Thread.sleep(3000);
+            Thread.sleep(5000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
         homepage.getElement(homepage.searchButton).click();
 
         searchResultPage.writeOnAElement(searchResultPage.searchProductInputBox,arg0);
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         getDriver().hideKeyboard();
     }
 
@@ -43,23 +52,28 @@ public class RemoveItem {
         }
         searchResultPage.clickOnElement(searchResultPage.product);
     }
-
-    @And("Click the Plus + icon {int} times to add to the cart")
-    public void clickThePlusIconTimesToAddToTheCart(int arg0) {
+    @And("Click the Plus + icon three times to add to the cart")
+    public void clickThePlusIconThreeTimesToAddToTheCart() {
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
         productDetailsPage.clickOnElement(productDetailsPage.addCartButton);
-        for (int i=1; i<arg0;i++) {
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-            productDetailsPage.clickOnElement(productDetailsPage.addCartButton1);
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
+        productDetailsPage.clickOnElement(productDetailsPage.addCartButton1);
+
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        productDetailsPage.clickOnElement(productDetailsPage.addCartButton1);
+
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
@@ -92,16 +106,6 @@ public class RemoveItem {
             throw new RuntimeException(e);
         }
         shoppingBagPage.clickOnElement(shoppingBagPage.productMinusButton);
-//        boolean minusButtonAvailable = shoppingBagPage.isElementVisible(shoppingBagPage.productMinusButton);
-//        while (minusButtonAvailable){
-//            try {
-//                Thread.sleep(1000);
-//            } catch (InterruptedException e) {
-//                throw new RuntimeException(e);
-//            }
-//            shoppingBagPage.clickOnElement(shoppingBagPage.productMinusButton);
-//            minusButtonAvailable = shoppingBagPage.isElementVisible(shoppingBagPage.productMinusButton);
-//        }
 
         try {
             Thread.sleep(2000);
@@ -117,4 +121,6 @@ public class RemoveItem {
         Assert.assertTrue(shoppingBagPage.isElementVisible(shoppingBagPage.bodyText));
         Assert.assertEquals(shoppingBagPage.getElementText(shoppingBagPage.bodyText),arg0);
     }
+
+
 }
