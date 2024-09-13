@@ -26,7 +26,7 @@ public class DriverSetup {
         File f = new File("src/test/resources/apk");
         File apk = new File(f, appFileName);
         DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
-        desiredCapabilities.setCapability("appium:deviceName", "SM M015g");
+        desiredCapabilities.setCapability("appium:deviceName", "SM M015G");
         desiredCapabilities.setCapability("udid", "R8KNA00APMJ");
         desiredCapabilities.setCapability("platformName", "android");
         desiredCapabilities.setCapability("appium:automationName", "UiAutomator2");
