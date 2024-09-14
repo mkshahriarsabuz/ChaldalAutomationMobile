@@ -10,8 +10,6 @@ import pages.ProductDetailsPage;
 import pages.SearchResultPage;
 import pages.ShoppingBagPage;
 
-import static utilities.DriverSetup.getDriver;
-
 public class RemoveItem {
 
     HomePage homepage = new HomePage();
@@ -28,52 +26,35 @@ public class RemoveItem {
         }
         homepage.handleLocationAllow();
         try {
-            Thread.sleep(5000);
+            Thread.sleep(3000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        homepage.getElement(homepage.searchButton).click();
-
+        homepage.clickOnElement(homepage.searchButton);
         searchResultPage.writeOnAElement(searchResultPage.searchProductInputBox,arg0);
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        getDriver().hideKeyboard();
     }
 
     @And("Scroll down to an item and Open the Item screen")
     public void scrollDownToAnItemAndOpenTheItemScreen() {
         try {
-            Thread.sleep(2000);
+            Thread.sleep(3000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
         searchResultPage.clickOnElement(searchResultPage.product);
     }
-    @And("Click the Plus + icon three times to add to the cart")
-    public void clickThePlusIconThreeTimesToAddToTheCart() {
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        productDetailsPage.clickOnElement(productDetailsPage.addCartButton);
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        productDetailsPage.clickOnElement(productDetailsPage.addCartButton1);
 
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        productDetailsPage.clickOnElement(productDetailsPage.addCartButton1);
+    @And("Click the Plus + icon {int} times to add to the cart")
+    public void clickThePlusIconTimesToAddToTheCart(int arg0) {
 
+        for (int i=0; i<arg0;i++) {
+            productDetailsPage.clickOnElement(productDetailsPage.addCartButton);
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
@@ -94,26 +75,14 @@ public class RemoveItem {
 
     @When("Click the Minus - icon to empty the cart")
     public void clickTheMinusIconToEmptyTheCart() {
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-           }
-        shoppingBagPage.clickOnElement(shoppingBagPage.productMinusButton);
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+        for (int i=0; i<3; i++){
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            shoppingBagPage.getElement(shoppingBagPage.productMinusButton).click();
         }
-        shoppingBagPage.clickOnElement(shoppingBagPage.productMinusButton);
-
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        shoppingBagPage.clickOnElement(shoppingBagPage.productMinusButton);
-
     }
 
     @Then("Verify Text {string} on cart screen after removing items")
@@ -121,6 +90,4 @@ public class RemoveItem {
         Assert.assertTrue(shoppingBagPage.isElementVisible(shoppingBagPage.bodyText));
         Assert.assertEquals(shoppingBagPage.getElementText(shoppingBagPage.bodyText),arg0);
     }
-
-
 }

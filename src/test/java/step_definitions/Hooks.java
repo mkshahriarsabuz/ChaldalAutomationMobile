@@ -11,10 +11,10 @@ import static utilities.DriverSetup.quitDriver;
 
 
 public class Hooks {
-    public static String appName = System.getProperty("appFileName", "chaldal.apk");
+
     @Before
     public void start() throws MalformedURLException {
-        openApp(appName);
+        openApp();
     }
 
     @After

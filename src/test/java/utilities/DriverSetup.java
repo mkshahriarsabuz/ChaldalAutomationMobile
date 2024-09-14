@@ -22,15 +22,14 @@ public class DriverSetup {
     }
 
 
-    public static AndroidDriver getApp(String appFileName) throws MalformedURLException {
-        File f = new File("src/test/resources/apk");
-        File apk = new File(f, appFileName);
+    public static AndroidDriver getApp() throws MalformedURLException {
         DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
         desiredCapabilities.setCapability("appium:deviceName", "SM M015G");
         desiredCapabilities.setCapability("udid", "R8KNA00APMJ");
         desiredCapabilities.setCapability("platformName", "android");
         desiredCapabilities.setCapability("appium:automationName", "UiAutomator2");
-        desiredCapabilities.setCapability("appium:app", apk.getAbsolutePath());
+        desiredCapabilities.setCapability("appPackage", "com.chaldal.poached");
+        desiredCapabilities.setCapability("appActivity", "com.chaldal.poached.MainActivity");
         desiredCapabilities.setCapability("appium:newCommandTimeout", 3600);
 
         URL remoteUrl = new URL("http://127.0.0.1:4723");
@@ -39,8 +38,8 @@ public class DriverSetup {
 
     }
 
-    public static void openApp(String appName) throws MalformedURLException {
-        AndroidDriver driver = getApp(appName);
+    public static void openApp() throws MalformedURLException {
+        AndroidDriver driver = getApp();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
         setDriver(driver);
     }

@@ -19,7 +19,7 @@ public class BasePage {
     }
 
     public void clickOnElement(By locator){
-        getElement(locator).click();
+        wait.until(ExpectedConditions.elementToBeClickable(locator)).click();
     }
 
     public void writeOnAElement(By locator, String text){
